@@ -20,7 +20,7 @@ A JavaFX desktop application for simulating POS terminals and testing POS manage
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/aha05/pos-terminal-simulator
 cd pos-terminal-simulator
 ```
 
