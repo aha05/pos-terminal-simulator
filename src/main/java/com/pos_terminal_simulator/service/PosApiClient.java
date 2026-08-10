@@ -1,7 +1,7 @@
-package org.example.service;
+package com.pos_terminal_simulator.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.dto.HeartbeatRequest;
+import com.pos_terminal_simulator.dto.HeartbeatRequest;
 
 import java.net.URI;
 import java.net.http.HttpClient;

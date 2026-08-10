@@ -1,10 +1,10 @@
-package org.example;
+package com.pos_terminal_simulator;
 
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.controller.PosSimulatorController;
+import com.pos_terminal_simulator.controller.PosSimulatorController;
 
 
 public class PosSimulatorApplication extends Application {

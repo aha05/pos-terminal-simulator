@@ -44,7 +44,7 @@
 
                 <configuration>
                     <mainClass>
-                        org.example.PosSimulatorApplication
+                        com.pos_terminal_simulator.PosSimulatorApplication
                     </mainClass>
                 </configuration>
             </plugin>

@@ -1,4 +1,4 @@
-package org.example.dto;
+package com.pos_terminal_simulator.dto;
 
 public record HeartbeatRequest(
         String terminalId,

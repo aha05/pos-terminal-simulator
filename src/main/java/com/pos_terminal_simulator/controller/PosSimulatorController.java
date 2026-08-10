@@ -1,4 +1,4 @@
-package org.example.controller;
+package com.pos_terminal_simulator.controller;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -7,8 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import org.example.dto.HeartbeatRequest;
-import org.example.service.PosApiClient;
+import com.pos_terminal_simulator.dto.HeartbeatRequest;
+import com.pos_terminal_simulator.service.PosApiClient;
 
 import java.util.concurrent.CompletableFuture;
 
