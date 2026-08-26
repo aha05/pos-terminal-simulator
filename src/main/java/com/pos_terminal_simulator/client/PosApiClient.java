@@ -1,6 +1,7 @@
-package com.pos_terminal_simulator.service;
+package com.pos_terminal_simulator.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pos_terminal_simulator.config.ApiConfig;
 import com.pos_terminal_simulator.dto.HeartbeatRequest;
 
 import java.net.URI;
@@ -10,27 +11,40 @@ import java.net.http.HttpResponse;
 
 public class PosApiClient {
 
-    private static final String HEARTBEAT_URL =
-            "http://localhost:8081/terminal/health/heartbeat";
-
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
+    private final ApiConfig apiConfig;
 
-    public PosApiClient() {
-        this.httpClient = HttpClient.newHttpClient();
-        this.objectMapper = new ObjectMapper();
+    public PosApiClient(
+            HttpClient httpClient,
+            ObjectMapper objectMapper,
+            ApiConfig apiConfig
+    ) {
+
+        this.httpClient = httpClient;
+        this.objectMapper = objectMapper;
+        this.apiConfig = apiConfig;
     }
+
 
     public String sendHeartbeat(
             HeartbeatRequest heartbeat
     ) throws Exception {
 
         String json =
-                objectMapper.writeValueAsString(heartbeat);
+                objectMapper.writeValueAsString(
+                        heartbeat
+                );
+
 
         HttpRequest request =
                 HttpRequest.newBuilder()
-                        .uri(URI.create(HEARTBEAT_URL))
+                        .uri(
+                                URI.create(
+                                        apiConfig.getPosManagementBaseUrl()
+                                                + "/terminal/health/heartbeat"
+                                )
+                        )
                         .header(
                                 "Content-Type",
                                 "application/json"
@@ -41,11 +55,13 @@ public class PosApiClient {
                         )
                         .build();
 
+
         HttpResponse<String> response =
                 httpClient.send(
                         request,
                         HttpResponse.BodyHandlers.ofString()
                 );
+
 
         if (response.statusCode() >= 200
                 && response.statusCode() < 300) {
@@ -53,9 +69,12 @@ public class PosApiClient {
             return response.body();
         }
 
+
         throw new RuntimeException(
-                "HTTP " + response.statusCode()
-                        + ": " + response.body()
+                "POS Management returned HTTP "
+                        + response.statusCode()
+                        + ": "
+                        + response.body()
         );
     }
 }

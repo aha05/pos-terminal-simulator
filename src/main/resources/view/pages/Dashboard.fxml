@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.pos_terminal_simulator.controller.DashboardController"
+        spacing="20"
+        style="-fx-background-color: #f5f7fa;">
+
+    <padding>
+        <Insets
+                top="25"
+                right="25"
+                bottom="25"
+                left="25"/>
+    </padding>
+
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <VBox spacing="5">
+
+        <Label
+                text="Dashboard"
+                style="-fx-font-size: 28px;
+                       -fx-font-weight: bold;"/>
+
+        <Label
+                text="POS Terminal Overview"
+                style="-fx-font-size: 14px;
+                       -fx-text-fill: #666666;"/>
+
+    </VBox>
+
+
+    <Separator/>
+
+
+    <!-- =========================================================
+         STATUS CARDS
+         ========================================================= -->
+
+    <HBox
+            spacing="15"
+            prefHeight="130">
+
+
+        <!-- =====================================================
+             TERMINAL STATUS
+             ===================================================== -->
+
+        <VBox
+                prefWidth="220"
+                prefHeight="120"
+                spacing="10"
+                style="-fx-background-color: white;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;
+                       -fx-border-color: #dddddd;
+                       -fx-padding: 20;">
+
+            <Label
+                    text="Terminal Status"
+                    style="-fx-font-size: 14px;
+                           -fx-text-fill: #666666;"/>
+
+            <Label
+                    fx:id="terminalStatusLabel"
+                    text="ONLINE"
+                    style="-fx-font-size: 24px;
+                           -fx-font-weight: bold;"/>
+
+        </VBox>
+
+
+        <!-- =====================================================
+             HEARTBEAT STATUS
+             ===================================================== -->
+
+        <VBox
+                prefWidth="220"
+                prefHeight="120"
+                spacing="10"
+                style="-fx-background-color: white;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;
+                       -fx-border-color: #dddddd;
+                       -fx-padding: 20;">
+
+            <Label
+                    text="Heartbeat"
+                    style="-fx-font-size: 14px;
+                           -fx-text-fill: #666666;"/>
+
+            <Label
+                    fx:id="heartbeatStatusLabel"
+                    text="ACTIVE"
+                    style="-fx-font-size: 24px;
+                           -fx-font-weight: bold;"/>
+
+        </VBox>
+
+
+        <!-- =====================================================
+             LAST HEARTBEAT
+             ===================================================== -->
+
+        <VBox
+                prefWidth="220"
+                prefHeight="120"
+                spacing="10"
+                style="-fx-background-color: white;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;
+                       -fx-border-color: #dddddd;
+                       -fx-padding: 20;">
+
+            <Label
+                    text="Last Heartbeat"
+                    style="-fx-font-size: 14px;
+                           -fx-text-fill: #666666;"/>
+
+            <Label
+                    fx:id="lastHeartbeatLabel"
+                    text="--:--:--"
+                    style="-fx-font-size: 24px;
+                           -fx-font-weight: bold;"/>
+
+        </VBox>
+
+
+        <!-- =====================================================
+             TRANSACTION COUNT
+             ===================================================== -->
+
+        <VBox
+                prefWidth="220"
+                prefHeight="120"
+                spacing="10"
+                style="-fx-background-color: white;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;
+                       -fx-border-color: #dddddd;
+                       -fx-padding: 20;">
+
+            <Label
+                    text="Transactions"
+                    style="-fx-font-size: 14px;
+                           -fx-text-fill: #666666;"/>
+
+            <Label
+                    fx:id="transactionCountLabel"
+                    text="0"
+                    style="-fx-font-size: 24px;
+                           -fx-font-weight: bold;"/>
+
+        </VBox>
+
+    </HBox>
+
+
+    <!-- =========================================================
+         TERMINAL INFORMATION
+         ========================================================= -->
+
+    <VBox spacing="10">
+
+        <Label
+                text="Terminal Information"
+                style="-fx-font-size: 20px;
+                       -fx-font-weight: bold;"/>
+
+
+        <GridPane
+                hgap="20"
+                vgap="12"
+                style="-fx-background-color: white;
+                       -fx-padding: 20;
+                       -fx-border-color: #dddddd;
+                       -fx-border-radius: 8;
+                       -fx-background-radius: 8;">
+
+            <columnConstraints>
+
+                <ColumnConstraints
+                        prefWidth="150"/>
+
+                <ColumnConstraints
+                        prefWidth="250"/>
+
+                <ColumnConstraints
+                        prefWidth="150"/>
+
+                <ColumnConstraints
+                        prefWidth="250"/>
+
+            </columnConstraints>
+
+
+            <rowConstraints>
+
+                <RowConstraints
+                        prefHeight="30"/>
+
+                <RowConstraints
+                        prefHeight="30"/>
+
+                <RowConstraints
+                        prefHeight="30"/>
+
+            </rowConstraints>
+
+
+            <!-- Terminal ID -->
+
+            <Label
+                    text="Terminal ID"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="terminalIdLabel"
+                    text="TERM0001"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="1"/>
+
+
+            <!-- Merchant ID -->
+
+            <Label
+                    text="Merchant ID"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="2"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="merchantIdLabel"
+                    text="MERCHANT000001"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="3"/>
+
+
+            <!-- Serial Number -->
+
+            <Label
+                    text="Serial Number"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="serialNumberLabel"
+                    text="SN-000001"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="1"/>
+
+
+            <!-- Model -->
+
+            <Label
+                    text="Model"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="2"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="modelLabel"
+                    text="POS-SIMULATOR"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="3"/>
+
+
+            <!-- IP Address -->
+
+            <Label
+                    text="IP Address"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="ipAddressLabel"
+                    text="127.0.0.1"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="1"/>
+
+
+            <!-- Connection -->
+
+            <Label
+                    text="Connection"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="2"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="connectionStatusLabel"
+                    text="CONNECTED"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="3"/>
+
+        </GridPane>
+
+    </VBox>
+
+</VBox>

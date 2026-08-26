@@ -2,7 +2,7 @@ package com.pos_terminal_simulator.dto;
 
 import java.time.LocalDateTime;
 
-public record HeartbeatRequest(
+public record HeartbeatResponse (
         Integer terminalId,
         String ipAddress,
         Integer batteryLevel,
@@ -14,3 +14,4 @@ public record HeartbeatRequest(
 
 ) {
 }
+

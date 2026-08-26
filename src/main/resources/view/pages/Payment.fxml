@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ScrollPane?>
+<ScrollPane
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.pos_terminal_simulator.controller.PaymentController"
+        fitToWidth="true"
+        fitToHeight="false"
+        hbarPolicy="NEVER"
+        vbarPolicy="AS_NEEDED"
+        pannable="true"
+        style="-fx-background-color: #f5f7fa;">
+
+    <content>
+<VBox
+        spacing="20"
+        style="-fx-background-color: #f5f7fa;">
+
+    <padding>
+        <Insets
+                top="25"
+                right="25"
+                bottom="25"
+                left="25"/>
+    </padding>
+
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <VBox spacing="5">
+
+        <Label
+                text="Payment"
+                style="-fx-font-size: 28px;
+                       -fx-font-weight: bold;"/>
+
+        <Label
+                text="Create and send an ISO 8583 payment request"
+                style="-fx-font-size: 14px;
+                       -fx-text-fill: #666666;"/>
+
+    </VBox>
+
+
+    <Separator/>
+
+
+    <!-- =========================================================
+         PAYMENT FORM
+         ========================================================= -->
+
+    <VBox
+            spacing="15"
+            style="-fx-background-color: white;
+                   -fx-background-radius: 8;
+                   -fx-border-radius: 8;
+                   -fx-border-color: #dddddd;
+                   -fx-padding: 25;">
+
+        <Label
+                text="Payment Request"
+                style="-fx-font-size: 20px;
+                       -fx-font-weight: bold;"/>
+
+
+        <!-- =====================================================
+             FORM GRID
+             ===================================================== -->
+
+        <GridPane
+                hgap="20"
+                vgap="15">
+
+            <columnConstraints>
+
+                <ColumnConstraints
+                        prefWidth="180"/>
+
+                <ColumnConstraints
+                        prefWidth="400"/>
+
+            </columnConstraints>
+
+
+            <!-- Transaction Type -->
+
+            <Label
+                    text="Transaction Type"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <ComboBox
+                    fx:id="transactionTypeComboBox"
+                    prefWidth="400"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="1"/>
+
+
+            <!-- Amount -->
+
+            <Label
+                    text="Amount"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <TextField
+                    fx:id="amountField"
+                    promptText="Enter amount"
+                    prefWidth="400"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="1"/>
+
+            <!-- currency -->
+
+            <Label
+                    text="currency"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <ComboBox
+                    fx:id="currencyComboBox"
+                    prefWidth="400"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="1"/>
+
+            <!-- PAN -->
+
+            <Label
+                    text="Card Number (PAN)"
+                    GridPane.rowIndex="3"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <TextField
+                    fx:id="panField"
+                    promptText="Enter card number"
+                    prefWidth="400"
+                    GridPane.rowIndex="3"
+                    GridPane.columnIndex="1"/>
+
+
+            <!-- Processing Code -->
+
+            <Label
+                    text="Processing Code"
+                    GridPane.rowIndex="4"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <TextField
+                    fx:id="processingCodeField"
+                    text="000000"
+                    prefWidth="400"
+                    GridPane.rowIndex="4"
+                    GridPane.columnIndex="1"/>
+
+
+            <!-- STAN -->
+
+            <Label
+                    text="STAN"
+                    GridPane.rowIndex="5"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <TextField
+                    fx:id="stanField"
+                    promptText="Automatically generated"
+                    prefWidth="400"
+                    GridPane.rowIndex="5"
+                    GridPane.columnIndex="1"/>
+
+
+            <!-- Terminal ID -->
+
+            <Label
+                    text="Terminal ID"
+                    GridPane.rowIndex="6"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <TextField
+                    fx:id="terminalIdField"
+                    editable="false"
+                    prefWidth="400"
+                    GridPane.rowIndex="6"
+                    GridPane.columnIndex="1"/>
+
+
+            <!-- Merchant ID -->
+
+            <Label
+                    text="Merchant ID"
+                    GridPane.rowIndex="7"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <TextField
+                    fx:id="merchantIdField"
+                    editable="false"
+                    prefWidth="400"
+                    GridPane.rowIndex="7"
+                    GridPane.columnIndex="1"/>
+
+        </GridPane>
+
+
+        <Separator/>
+
+
+        <!-- =====================================================
+             ACTION BUTTONS
+             ===================================================== -->
+
+        <HBox
+                spacing="15">
+
+            <Button
+                    fx:id="sendPaymentButton"
+                    text="Send Payment"
+                    prefWidth="160"
+                    prefHeight="40"
+                    onAction="#processPayment"/>
+
+            <Button
+                    fx:id="clearButton"
+                    text="Clear"
+                    prefWidth="120"
+                    prefHeight="40"
+                    onAction="#clearForm"/>
+
+        </HBox>
+
+    </VBox>
+
+
+    <!-- =========================================================
+         RESPONSE
+         ========================================================= -->
+
+    <VBox
+            spacing="10"
+            style="-fx-background-color: white;
+                   -fx-background-radius: 8;
+                   -fx-border-radius: 8;
+                   -fx-border-color: #dddddd;
+                   -fx-padding: 20;">
+
+        <Label
+                text="Transaction Response"
+                style="-fx-font-size: 20px;
+                       -fx-font-weight: bold;"/>
+
+        <Label
+                fx:id="responseStatusLabel"
+                text="Waiting for transaction..."
+                style="-fx-font-size: 16px;"/>
+
+        <Label
+                fx:id="responseMessageLabel"
+                text=""
+                wrapText="true"
+                style="-fx-font-size: 14px;
+                       -fx-text-fill: #666666;"/>
+
+    </VBox>
+
+</VBox>
+    </content>
+
+</ScrollPane>

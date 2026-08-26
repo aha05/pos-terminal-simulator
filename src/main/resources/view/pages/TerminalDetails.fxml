@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.pos_terminal_simulator.controller.TerminalDetailsController"
+        spacing="20"
+        style="-fx-background-color: #f5f7fa;">
+
+    <padding>
+        <Insets
+                top="25"
+                right="25"
+                bottom="25"
+                left="25"/>
+    </padding>
+
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <VBox spacing="5">
+
+        <Label
+                text="POS Terminal Details"
+                style="-fx-font-size: 28px;
+                       -fx-font-weight: bold;"/>
+
+        <Label
+                text="Current terminal configuration and status"
+                style="-fx-font-size: 14px;
+                       -fx-text-fill: #666666;"/>
+
+    </VBox>
+
+
+    <Separator/>
+
+
+    <!-- =========================================================
+         TERMINAL STATUS
+         ========================================================= -->
+
+    <HBox
+            spacing="15">
+
+        <!-- Connection Status -->
+
+        <VBox
+                prefWidth="250"
+                spacing="8"
+                style="-fx-background-color: white;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;
+                       -fx-border-color: #dddddd;
+                       -fx-padding: 20;">
+
+            <Label
+                    text="Connection Status"
+                    style="-fx-font-size: 14px;
+                           -fx-text-fill: #666666;"/>
+
+            <Label
+                    fx:id="connectionStatusLabel"
+                    text="CONNECTED"
+                    style="-fx-font-size: 22px;
+                           -fx-font-weight: bold;"/>
+
+        </VBox>
+
+
+        <!-- Heartbeat Status -->
+
+        <VBox
+                prefWidth="250"
+                spacing="8"
+                style="-fx-background-color: white;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;
+                       -fx-border-color: #dddddd;
+                       -fx-padding: 20;">
+
+            <Label
+                    text="Heartbeat Status"
+                    style="-fx-font-size: 14px;
+                           -fx-text-fill: #666666;"/>
+
+            <Label
+                    fx:id="heartbeatStatusLabel"
+                    text="ACTIVE"
+                    style="-fx-font-size: 22px;
+                           -fx-font-weight: bold;"/>
+
+        </VBox>
+
+
+        <!-- Terminal Status -->
+
+        <VBox
+                prefWidth="250"
+                spacing="8"
+                style="-fx-background-color: white;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;
+                       -fx-border-color: #dddddd;
+                       -fx-padding: 20;">
+
+            <Label
+                    text="Terminal Status"
+                    style="-fx-font-size: 14px;
+                           -fx-text-fill: #666666;"/>
+
+            <Label
+                    fx:id="terminalStatusLabel"
+                    text="ACTIVE"
+                    style="-fx-font-size: 22px;
+                           -fx-font-weight: bold;"/>
+
+        </VBox>
+
+    </HBox>
+
+
+    <!-- =========================================================
+         TERMINAL INFORMATION
+         ========================================================= -->
+
+    <VBox
+            spacing="10"
+            style="-fx-background-color: white;
+                   -fx-background-radius: 8;
+                   -fx-border-radius: 8;
+                   -fx-border-color: #dddddd;
+                   -fx-padding: 20;">
+
+        <Label
+                text="Terminal Information"
+                style="-fx-font-size: 20px;
+                       -fx-font-weight: bold;"/>
+
+
+        <GridPane
+                hgap="20"
+                vgap="15">
+
+            <columnConstraints>
+
+                <ColumnConstraints
+                        prefWidth="160"/>
+
+                <ColumnConstraints
+                        prefWidth="300"/>
+
+                <ColumnConstraints
+                        prefWidth="160"/>
+
+                <ColumnConstraints
+                        prefWidth="300"/>
+
+            </columnConstraints>
+
+
+            <!-- =================================================
+                 ROW 0
+                 ================================================= -->
+
+            <Label
+                    text="Terminal ID"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="terminalIdLabel"
+                    text="TERM0001"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="1"/>
+
+
+            <Label
+                    text="Merchant ID"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="2"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="merchantIdLabel"
+                    text="MERCHANT000001"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="3"/>
+
+
+            <!-- =================================================
+                 ROW 1
+                 ================================================= -->
+
+            <Label
+                    text="Serial Number"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="serialNumberLabel"
+                    text="SN-000001"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="1"/>
+
+            <Label
+                    text="Currency"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="2"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="currencyLabel"
+                    text="ETB"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="3"/>
+
+
+            <!-- =================================================
+                 ROW 2
+                 ================================================= -->
+
+            <Label
+                    text="Network Type"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="networkTypeLabel"
+                    text="POS"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="1"/>
+
+            <Label
+                    text="Storage"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="2"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="storage"
+                    text="5GB"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="3"/>
+
+
+            <!-- =================================================
+                 ROW 3
+                 ================================================= -->
+
+            <Label
+                    text="IP Address"
+                    GridPane.rowIndex="3"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="ipAddressLabel"
+                    text="127.0.0.1"
+                    GridPane.rowIndex="3"
+                    GridPane.columnIndex="1"/>
+
+
+            <Label
+                    text="Battery"
+                    GridPane.rowIndex="3"
+                    GridPane.columnIndex="2"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="battery"
+                    text="00:00:00:00:00:00"
+                    GridPane.rowIndex="3"
+                    GridPane.columnIndex="3"/>
+
+
+            <!-- =================================================
+                 ROW 4
+                 ================================================= -->
+
+            <Label
+                    text="Firmware Version"
+                    GridPane.rowIndex="4"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="firmwareVersionLabel"
+                    text="1.0.0"
+                    GridPane.rowIndex="4"
+                    GridPane.columnIndex="1"/>
+
+
+            <Label
+                    text="Signal Strength"
+                    GridPane.rowIndex="4"
+                    GridPane.columnIndex="2"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="signalStrength"
+                    text="-"
+                    GridPane.rowIndex="4"
+                    GridPane.columnIndex="3"/>
+
+        </GridPane>
+
+    </VBox>
+
+
+    <!-- =========================================================
+         HEARTBEAT INFORMATION
+         ========================================================= -->
+
+    <VBox
+            spacing="10"
+            style="-fx-background-color: white;
+                   -fx-background-radius: 8;
+                   -fx-border-radius: 8;
+                   -fx-border-color: #dddddd;
+                   -fx-padding: 20;">
+
+        <Label
+                text="Heartbeat Information"
+                style="-fx-font-size: 20px;
+                       -fx-font-weight: bold;"/>
+
+
+        <GridPane
+                hgap="20"
+                vgap="15">
+
+            <columnConstraints>
+
+                <ColumnConstraints
+                        prefWidth="200"/>
+
+                <ColumnConstraints
+                        prefWidth="300"/>
+
+            </columnConstraints>
+
+
+            <Label
+                    text="Automatic Heartbeat"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="autoHeartbeatLabel"
+                    text="ENABLED"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="1"/>
+
+
+            <Label
+                    text="Heartbeat Interval"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="heartbeatIntervalLabel"
+                    text="30 seconds"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="1"/>
+
+
+            <Label
+                    text="Last Heartbeat"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="lastHeartbeatLabel"
+                    text="-"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="1"/>
+
+
+            <Label
+                    text="Next Heartbeat"
+                    GridPane.rowIndex="3"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="nextHeartbeatLabel"
+                    text="-"
+                    GridPane.rowIndex="3"
+                    GridPane.columnIndex="1"/>
+
+        </GridPane>
+
+    </VBox>
+
+
+    <!-- =========================================================
+         SYSTEM INFORMATION
+         ========================================================= -->
+
+    <VBox
+            spacing="10"
+            style="-fx-background-color: white;
+                   -fx-background-radius: 8;
+                   -fx-border-radius: 8;
+                   -fx-border-color: #dddddd;
+                   -fx-padding: 20;">
+
+        <Label
+                text="System Information"
+                style="-fx-font-size: 20px;
+                       -fx-font-weight: bold;"/>
+
+
+        <GridPane
+                hgap="20"
+                vgap="15">
+
+            <columnConstraints>
+
+                <ColumnConstraints
+                        prefWidth="200"/>
+
+                <ColumnConstraints
+                        prefWidth="300"/>
+
+            </columnConstraints>
+
+
+            <Label
+                    text="Operating System"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="operatingSystemLabel"
+                    text="-"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="1"/>
+
+
+            <Label
+                    text="Java Version"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="javaVersionLabel"
+                    text="-"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="1"/>
+
+
+            <Label
+                    text="Application Version"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="0"
+                    style="-fx-font-weight: bold;"/>
+
+            <Label
+                    fx:id="applicationVersionLabel"
+                    text="1.0.0"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="1"/>
+
+        </GridPane>
+
+    </VBox>
+
+</VBox>

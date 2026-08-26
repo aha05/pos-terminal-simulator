@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.pos_terminal_simulator.controller.MainController">
+
+    <left>
+
+        <VBox
+                prefWidth="220"
+                spacing="10"
+                style="-fx-padding: 20;">
+
+            <Label
+                    text="POS SIMULATOR"
+                    style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <Separator/>
+
+            <Button
+                    text="Dashboard"
+                    maxWidth="Infinity"
+                    onAction="#showDashboard"/>
+
+            <Button
+                    text="Payment"
+                    maxWidth="Infinity"
+                    onAction="#showPayment"/>
+
+            <Separator/>
+
+            <Label
+                    text="POS"
+                    style="-fx-font-weight: bold;"/>
+
+            <Button
+                    text="POS Details"
+                    maxWidth="Infinity"
+                    onAction="#showTerminalDetails"/>
+
+            <Button
+                    text="Settings"
+                    maxWidth="Infinity"
+                    onAction="#showSettings"/>
+
+            <Separator/>
+
+            <Button
+                    text="Exit"
+                    maxWidth="Infinity"
+                    onAction="#exit"/>
+
+        </VBox>
+
+    </left>
+
+    <center>
+
+        <StackPane fx:id="contentArea"/>
+
+    </center>
+
+</BorderPane>
