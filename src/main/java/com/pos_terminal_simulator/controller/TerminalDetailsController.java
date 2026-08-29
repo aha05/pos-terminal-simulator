@@ -1,7 +1,7 @@
 package com.pos_terminal_simulator.controller;
 
-import com.pos_terminal_simulator.config.PosConfiguration;
 import com.pos_terminal_simulator.dto.TerminalDetailsResponse;
+import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.service.TerminalService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -27,14 +27,14 @@ public class TerminalDetailsController {
 //    private Label statusLabel;
 
     private TerminalService terminalService;
-    private PosConfiguration configuration;
+    private Terminal terminal;
 
     public void initialize(
-            PosConfiguration configuration,
+            Terminal terminal,
             TerminalService terminalService
     ) {
-        this.configuration =
-                configuration;
+        this.terminal =
+                terminal;
 
         this.terminalService =
                 terminalService;

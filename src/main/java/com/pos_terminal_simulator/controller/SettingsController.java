@@ -1,6 +1,6 @@
 package com.pos_terminal_simulator.controller;
 
-import com.pos_terminal_simulator.config.PosConfiguration;
+import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.service.SettingsService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -124,7 +124,7 @@ public class SettingsController {
      * this page.
      */
     public void initialize(
-            PosConfiguration configuration,
+            Terminal terminal,
             SettingsService settingsService
     ) {
 
@@ -138,7 +138,7 @@ public class SettingsController {
          *
          * Later these should come from:
          *
-         * PosConfiguration
+         * Terminal
          * SettingsService
          */
 

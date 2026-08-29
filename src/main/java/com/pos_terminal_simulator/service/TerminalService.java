@@ -1,16 +1,16 @@
 package com.pos_terminal_simulator.service;
 
-import com.pos_terminal_simulator.config.PosConfiguration;
 import com.pos_terminal_simulator.dto.TerminalDetailsResponse;
+import com.pos_terminal_simulator.entity.Terminal;
 
 public class TerminalService {
 
-    private final PosConfiguration configuration;
+    private final Terminal terminal;
 
     public TerminalService(
-            PosConfiguration configuration
+            Terminal terminal
     ) {
-        this.configuration = configuration;
+        this.terminal = terminal;
     }
 
     public TerminalDetailsResponse getTerminalDetails() {
@@ -19,23 +19,23 @@ public class TerminalService {
                 new TerminalDetailsResponse();
 
         response.setTerminalId(
-                configuration.getTerminalId()
+                terminal.getTerminalId()
         );
 
         response.setMerchantId(
-                configuration.getMerchantId()
+                terminal.getMerchantId()
         );
 
         response.setSerialNumber(
-                configuration.getSerialNumber()
+                terminal.getSerialNumber()
         );
 
         response.setModel(
-                configuration.getTerminalModel()
+                terminal.getTerminalModel()
         );
 
         response.setSoftwareVersion(
-                configuration.getSoftwareVersion()
+                terminal.getSoftwareVersion()
         );
 
         response.setStatus("ONLINE");
