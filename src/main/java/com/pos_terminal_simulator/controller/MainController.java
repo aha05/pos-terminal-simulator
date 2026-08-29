@@ -1,6 +1,6 @@
 package com.pos_terminal_simulator.controller;
 
-import com.pos_terminal_simulator.config.PosConfiguration;
+import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.scheduler.HeartbeatScheduler;
 import com.pos_terminal_simulator.service.HeartbeatService;
 import com.pos_terminal_simulator.service.PaymentService;
@@ -26,7 +26,7 @@ public class MainController {
      * =========================================================
      */
 
-    private PosConfiguration configuration;
+    private Terminal terminal;
 
     private HeartbeatService heartbeatService;
 
@@ -46,7 +46,7 @@ public class MainController {
      */
 
     public void initialize(
-            PosConfiguration configuration,
+            Terminal terminal,
             HeartbeatService heartbeatService,
             HeartbeatScheduler heartbeatScheduler,
             SettingsService settingsService,
@@ -54,8 +54,8 @@ public class MainController {
             PaymentService paymentService
     ) {
 
-        this.configuration =
-                configuration;
+        this.terminal =
+                terminal;
 
         this.heartbeatService =
                 heartbeatService;
@@ -94,7 +94,7 @@ public class MainController {
                             (DashboardController) controller;
 
                     dashboardController.initialize(
-                            configuration,
+                            terminal,
                             settingsService
                     );
                 }
@@ -120,7 +120,7 @@ public class MainController {
                             (PaymentController) controller;
 
                     paymentController.initialize(
-                            configuration,
+                            terminal,
                             paymentService
                     );
                 }
@@ -154,7 +154,7 @@ public class MainController {
                             (TerminalDetailsController) controller;
 
                     terminalDetailsController.initialize(
-                            configuration,
+                            terminal,
                             terminalService
                     );
                 }
@@ -180,7 +180,7 @@ public class MainController {
                             (SettingsController) controller;
 
                     settingsController.initialize(
-                            configuration,
+                            terminal,
                             settingsService
                     );
                 }

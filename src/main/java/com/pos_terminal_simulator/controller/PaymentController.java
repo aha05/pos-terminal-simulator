@@ -1,8 +1,8 @@
 package com.pos_terminal_simulator.controller;
 
-import com.pos_terminal_simulator.config.PosConfiguration;
 import com.pos_terminal_simulator.dto.PaymentRequest;
 import com.pos_terminal_simulator.dto.PaymentResponse;
+import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.service.PaymentService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -26,16 +26,16 @@ public class PaymentController {
     @FXML
     private Label responseMessageLabel;
 
-    private PosConfiguration configuration;
+    private Terminal terminal;
     private PaymentService paymentService;
 
     public void initialize(
-            PosConfiguration configuration,
+            Terminal terminal,
             PaymentService paymentService
     ) {
 
-        this.configuration =
-                configuration;
+        this.terminal =
+                terminal;
 
         this.paymentService =
                 paymentService;
@@ -61,11 +61,11 @@ public class PaymentController {
                     new PaymentRequest();
 
             request.setTerminalId(
-                    configuration.getTerminalId()
+                    terminal.getTerminalId()
             );
 
             request.setMerchantId(
-                    configuration.getMerchantId()
+                    terminal.getMerchantId()
             );
 
             request.setAmount(amount);

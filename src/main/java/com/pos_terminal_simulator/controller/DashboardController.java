@@ -1,7 +1,7 @@
 package com.pos_terminal_simulator.controller;
 
-import com.pos_terminal_simulator.config.PosConfiguration;
 import com.pos_terminal_simulator.entity.Settings;
+import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.service.SettingsService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -23,18 +23,18 @@ public class DashboardController {
     @FXML
     private Label heartbeatIntervalLabel;
 
-    private PosConfiguration configuration;
+    private Terminal terminal;
     private SettingsService settingsService;
 //    private SchedulerManager schedulerManager;
 
     public void initialize(
-            PosConfiguration configuration,
+            Terminal terminal,
             SettingsService settingsService
 //            SchedulerManager schedulerManager
     ) {
 
-        this.configuration =
-                configuration;
+        this.terminal =
+                terminal;
 
         this.settingsService =
                 settingsService;
@@ -48,11 +48,11 @@ public class DashboardController {
     private void refresh() {
 
         terminalIdLabel.setText(
-                configuration.getTerminalId()
+                terminal.getTerminalId()
         );
 
         merchantIdLabel.setText(
-                configuration.getMerchantId()
+                terminal.getMerchantId()
         );
 
         Settings settings =

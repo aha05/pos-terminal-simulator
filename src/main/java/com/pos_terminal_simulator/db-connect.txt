@@ -1,0 +1,10 @@
+GUI
+-----------------
+cd C:\Users\Admin\.m2\repository\org\hsqldb\hsqldb\2.7.4
+java -cp hsqldb-2.7.4.jar org.hsqldb.util.DatabaseManagerSwing
+Stopping
+URL: jdbc:hsqldb:file:C:/Users/Admin/Documents/Desktop/javafx/pos-terminal-simulator/data/pos-simulator
+
+CMD
+-------------
+java -cp "$env:USERPROFILE\.m2\repository\org\hsqldb\sqltool\2.7.4\sqltool-2.7.4.jar;$env:USERPROFILE\.m2\repository\org\hsqldb\hsqldb\2.7.4\hsqldb-2.7.4.jar" org.hsqldb.cmdline.SqlTool --inlineRc "url=jdbc:hsqldb:file:C:/Users/Admin/Documents/Desktop/javafx/pos-terminal-simulator/data/pos-simulator,user=SA,password="

@@ -7,8 +7,10 @@ import com.pos_terminal_simulator.client.PosManagementClient;
 import com.pos_terminal_simulator.client.SwitchClient;
 import com.pos_terminal_simulator.config.ApiConfig;
 import com.pos_terminal_simulator.config.AppConfig;
-import com.pos_terminal_simulator.config.PosConfiguration;
 import com.pos_terminal_simulator.controller.MainController;
+import com.pos_terminal_simulator.database.DatabaseInitializer;
+import com.pos_terminal_simulator.database.DatabaseManager;
+import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.scheduler.HeartbeatScheduler;
 import com.pos_terminal_simulator.service.HeartbeatService;
 import com.pos_terminal_simulator.service.PaymentService;
@@ -60,11 +62,22 @@ public class PosSimulatorApplication extends Application {
          * =========================================================
          */
 
+        DatabaseManager databaseManager =
+                new DatabaseManager();
+
+        DatabaseInitializer databaseInitializer =
+                new DatabaseInitializer(
+                        databaseManager.getDataSource()
+                );
+
+        databaseInitializer.initialize();
+
+
         AppConfig appConfig =
                 new AppConfig();
 
-        PosConfiguration posConfiguration =
-                appConfig.getPosConfiguration();
+        Terminal terminal =
+                appConfig.getTerminal();
 
 
         /*
@@ -173,7 +186,7 @@ public class PosSimulatorApplication extends Application {
 
         terminalService =
                 new TerminalService(
-                        posConfiguration
+                        terminal
                 );
 
 
@@ -344,7 +357,7 @@ public class PosSimulatorApplication extends Application {
 
         controller.initialize(
 
-                posConfiguration,
+                terminal,
 
                 heartbeatService,
 

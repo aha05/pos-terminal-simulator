@@ -1,20 +1,22 @@
 package com.pos_terminal_simulator.config;
 
+import com.pos_terminal_simulator.entity.Terminal;
+
 public class AppConfig {
 
-    private final PosConfiguration posConfiguration;
+    private final Terminal terminal;
     private final ApiConfig apiConfig;
 
     public AppConfig() {
-        this.posConfiguration =
-                new PosConfiguration();
+        this.terminal =
+                new Terminal();
 
         this.apiConfig =
                 new ApiConfig();
     }
 
-    public PosConfiguration getPosConfiguration() {
-        return posConfiguration;
+    public Terminal getTerminal() {
+        return terminal;
     }
 
     public ApiConfig getApiConfig() {
