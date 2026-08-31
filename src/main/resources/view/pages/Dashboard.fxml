@@ -127,12 +127,12 @@
                        -fx-padding: 20;">
 
             <Label
-                    text="Last Heartbeat"
+                    text="Heartbeat Interval"
                     style="-fx-font-size: 14px;
                            -fx-text-fill: #666666;"/>
 
             <Label
-                    fx:id="lastHeartbeatLabel"
+                    fx:id="heartbeatIntervalLabel"
                     text="--:--:--"
                     style="-fx-font-size: 24px;
                            -fx-font-weight: bold;"/>

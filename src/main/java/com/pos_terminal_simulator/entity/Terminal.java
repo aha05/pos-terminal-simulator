@@ -1,5 +1,6 @@
 package com.pos_terminal_simulator.entity;
 
+
 public class Terminal {
 
     private Long id;
@@ -13,23 +14,15 @@ public class Terminal {
 
     public Terminal(){};
 
-    public Terminal(
-            String terminalId,
-            String merchantId,
-            String serialNumber,
-            String terminalModel,
-            String softwareVersion,
-            String currency,
-            String status
-    ) {
-        this.terminalId = terminalId;
-        this.merchantId = merchantId;
-        this.serialNumber = serialNumber;
-        this.terminalModel = terminalModel;
-        this.softwareVersion = softwareVersion;
-        this.currency = currency;
-        this.status = status;
-    }
+    public Terminal(Builder builder){
+        this.terminalId = builder.terminalId;
+        this.merchantId = builder.merchantId;
+        this.serialNumber = builder.serialNumber;
+        this.terminalModel = builder.terminalModel;
+        this.softwareVersion = builder.softwareVersion;
+        this.currency = builder.currency;
+        this.status = builder.status;
+    };
 
 
     public String getTerminalId() {
@@ -94,5 +87,56 @@ public class Terminal {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    // Builder config
+    public static class Builder {
+
+        private String terminalId;
+        private String merchantId;
+        private String serialNumber;
+        private String terminalModel;
+        private String softwareVersion;
+        private String currency;
+        private String status;
+
+        public Builder terminalId(String terminalId) {
+            this.terminalId = terminalId;
+            return this;
+        }
+
+        public Builder merchantId(String merchantId) {
+            this.merchantId = merchantId;
+            return this;
+        }
+
+        public Builder serialNumber(String serialNumber) {
+            this.serialNumber = serialNumber;
+            return this;
+        }
+
+        public Builder terminalModel(String terminalModel) {
+            this.terminalModel = terminalModel;
+            return this;
+        }
+
+        public Builder softwareVersion(String softwareVersion) {
+            this.softwareVersion = softwareVersion;
+            return this;
+        }
+
+        public Builder currency(String currency) {
+            this.currency = currency;
+            return this;
+        }
+
+        public Builder status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public Terminal build() {
+            return new Terminal(this);
+        }
     }
 }

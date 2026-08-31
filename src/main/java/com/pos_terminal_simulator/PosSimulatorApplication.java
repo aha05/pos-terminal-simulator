@@ -12,10 +12,7 @@ import com.pos_terminal_simulator.database.DatabaseInitializer;
 import com.pos_terminal_simulator.database.DatabaseManager;
 import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.scheduler.HeartbeatScheduler;
-import com.pos_terminal_simulator.service.HeartbeatService;
-import com.pos_terminal_simulator.service.PaymentService;
-import com.pos_terminal_simulator.service.SettingsService;
-import com.pos_terminal_simulator.service.TerminalService;
+import com.pos_terminal_simulator.service.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,18 +24,9 @@ import java.net.http.HttpClient;
 
 public class PosSimulatorApplication extends Application {
 
-    /*
-     * =========================================================
-     * APPLICATION-LEVEL SERVICES
-     * =========================================================
-     *
-     * These services are created once when the application
-     * starts and shared with the controllers that need them.
-     */
-
     private SettingsService settingsService;
 
-    private TerminalService terminalService;
+    private TerminalDetailsService terminalDetailsService;
 
     private PaymentService paymentService;
 
@@ -46,22 +34,14 @@ public class PosSimulatorApplication extends Application {
 
     private HeartbeatScheduler heartbeatScheduler;
 
+    private TerminalService terminalService;
 
-    /*
-     * =========================================================
-     * START APPLICATION
-     * =========================================================
-     */
+    private AppConfig appConfig;
+
 
     @Override
     public void start(Stage stage) throws Exception {
-
-        /*
-         * =========================================================
-         * 1. APPLICATION CONFIGURATION
-         * =========================================================
-         */
-
+        // APPLICATION CONFIGURATION
         DatabaseManager databaseManager =
                 new DatabaseManager();
 
@@ -79,32 +59,11 @@ public class PosSimulatorApplication extends Application {
         Terminal terminal =
                 appConfig.getTerminal();
 
+        terminalService = appConfig.getTerminalService();
 
-        /*
-         * =========================================================
-         * 2. HTTP CLIENT
-         * =========================================================
-         *
-         * Used for REST communication with POS Management.
-         */
 
         HttpClient httpClient =
                 HttpClient.newHttpClient();
-
-
-        /*
-         * =========================================================
-         * 3. OBJECT MAPPER
-         * =========================================================
-         *
-         * Jackson needs JavaTimeModule when DTOs contain:
-         *
-         * - LocalDateTime
-         * - LocalDate
-         * - LocalTime
-         *
-         * HeartbeatRequest contains LocalDateTime.
-         */
 
         ObjectMapper objectMapper =
                 new ObjectMapper();
@@ -112,21 +71,6 @@ public class PosSimulatorApplication extends Application {
         objectMapper.registerModule(
                 new JavaTimeModule()
         );
-
-
-        /*
-         * =========================================================
-         * 4. CLIENTS
-         * =========================================================
-         *
-         * PosManagementClient
-         * -------------------
-         * Communicates with POS Management backend.
-         *
-         * SwitchClient
-         * ------------
-         * Communicates with payment switch using TCP.
-         */
 
         PosManagementClient posManagementClient =
                 new PosManagementClient(
@@ -157,47 +101,14 @@ public class PosSimulatorApplication extends Application {
                                 .getSwitchPort()
                 );
 
-
-        /*
-         * =========================================================
-         * 5. SERVICES
-         * =========================================================
-         */
-
-        /*
-         * ---------------------------------------------------------
-         * Settings Service
-         * ---------------------------------------------------------
-         *
-         * Responsible for local POS settings.
-         */
-
         settingsService =
                 new SettingsService();
 
 
-        /*
-         * ---------------------------------------------------------
-         * Terminal Service
-         * ---------------------------------------------------------
-         *
-         * Responsible for terminal-related operations.
-         */
-
-        terminalService =
-                new TerminalService(
+        terminalDetailsService =
+                new TerminalDetailsService(
                         terminal
                 );
-
-
-        /*
-         * ---------------------------------------------------------
-         * Payment Service
-         * ---------------------------------------------------------
-         *
-         * Responsible for payment communication with
-         * the payment switch.
-         */
 
         paymentService =
                 new PaymentService(
@@ -205,59 +116,16 @@ public class PosSimulatorApplication extends Application {
                 );
 
 
-        /*
-         * ---------------------------------------------------------
-         * Heartbeat Service
-         * ---------------------------------------------------------
-         *
-         * Responsible for sending heartbeat requests to
-         * POS Management.
-         */
-
         heartbeatService =
                 new HeartbeatService(
                         posApiClient
                 );
 
 
-        /*
-         * =========================================================
-         * 6. HEARTBEAT SCHEDULER
-         * =========================================================
-         *
-         * The scheduler uses HeartbeatService to send
-         * automatic heartbeat requests.
-         */
-
         heartbeatScheduler =
                 new HeartbeatScheduler(
                         heartbeatService
                 );
-
-
-        /*
-         * =========================================================
-         * 7. LOAD MAIN FXML
-         * =========================================================
-         *
-         * Main.fxml is the application shell.
-         *
-         * It contains:
-         *
-         * - Navigation menu
-         * - Content area
-         * - POS simulator layout
-         *
-         * Individual pages such as:
-         *
-         * - Dashboard
-         * - Payment
-         * - Heartbeat
-         * - Terminal Details
-         * - Settings
-         *
-         * are loaded by MainController.
-         */
 
         URL fxmlUrl =
                 getClass().getResource(
@@ -269,13 +137,6 @@ public class PosSimulatorApplication extends Application {
                         + fxmlUrl
         );
 
-
-        /*
-         * =========================================================
-         * 8. VERIFY FXML
-         * =========================================================
-         */
-
         if (fxmlUrl == null) {
 
             throw new RuntimeException(
@@ -283,52 +144,15 @@ public class PosSimulatorApplication extends Application {
             );
         }
 
-
-        /*
-         * =========================================================
-         * 9. CREATE FXML LOADER
-         * =========================================================
-         */
-
         FXMLLoader loader =
                 new FXMLLoader(fxmlUrl);
-
-
-        /*
-         * =========================================================
-         * 10. LOAD FXML
-         * =========================================================
-         *
-         * IMPORTANT:
-         *
-         * The controller is created during load().
-         *
-         * Therefore:
-         *
-         * loader.getController()
-         *
-         * must be called AFTER loader.load().
-         */
 
         Parent root =
                 loader.load();
 
 
-        /*
-         * =========================================================
-         * 11. GET MAIN CONTROLLER
-         * =========================================================
-         */
-
         MainController controller =
                 loader.getController();
-
-
-        /*
-         * =========================================================
-         * 12. VERIFY MAIN CONTROLLER
-         * =========================================================
-         */
 
         if (controller == null) {
 
@@ -343,17 +167,7 @@ public class PosSimulatorApplication extends Application {
                         + controller
         );
 
-
-        /*
-         * =========================================================
-         * 13. INJECT APPLICATION SERVICES
-         * =========================================================
-         *
-         * MainController does not create services.
-         *
-         * PosSimulatorApplication creates them and passes
-         * them into MainController.
-         */
+        appConfig = new AppConfig();
 
         controller.initialize(
 
@@ -365,31 +179,22 @@ public class PosSimulatorApplication extends Application {
 
                 settingsService,
 
-                terminalService,
+                terminalDetailsService,
 
-                paymentService
+                paymentService,
+
+                terminalService
         );
 
 
-        /*
-         * =========================================================
-         * 14. CREATE SCENE
-         * =========================================================
-         */
 
         Scene scene =
                 new Scene(
                         root,
-                        1200,
-                        750
+                        1000,
+                        650
                 );
 
-
-        /*
-         * =========================================================
-         * 15. CONFIGURE STAGE
-         * =========================================================
-         */
 
         stage.setTitle(
                 "POS Terminal Simulator"
@@ -399,38 +204,25 @@ public class PosSimulatorApplication extends Application {
 
         stage.show();
 
-
-        /*
-         * =========================================================
-         * 16. APPLICATION STARTED
-         * =========================================================
-         */
-
         System.out.println(
                 "POS Terminal Simulator started"
         );
     }
 
 
-    /*
-     * =========================================================
-     * APPLICATION SHUTDOWN
-     * =========================================================
-     */
+
 
     @Override
     public void stop() {
 
-        /*
-         * Stop heartbeat scheduler.
-         *
-         * This is important because the scheduler uses
-         * its own background thread.
-         */
-
         if (heartbeatScheduler != null) {
-
             heartbeatScheduler.shutdown();
+        }
+
+        appConfig = new AppConfig();
+
+        if (appConfig != null) {
+            appConfig.getDatabaseManager().shutdown();
         }
 
 
@@ -440,14 +232,7 @@ public class PosSimulatorApplication extends Application {
     }
 
 
-    /*
-     * =========================================================
-     * MAIN
-     * =========================================================
-     */
-
     public static void main(String[] args) {
-
         launch(args);
     }
 }

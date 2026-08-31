@@ -8,10 +8,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox
+<?import javafx.scene.control.ScrollPane?>
+
+<ScrollPane
         xmlns="http://javafx.com/javafx/17"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="com.pos_terminal_simulator.controller.TerminalDetailsController"
+        fitToWidth="true"
+        fitToHeight="false"
+        hbarPolicy="NEVER"
+        vbarPolicy="AS_NEEDED"
+        pannable="true"
+        style="-fx-background-color: #f5f7fa;">
+
+    <content>
+
+
+<VBox
         spacing="20"
         style="-fx-background-color: #f5f7fa;">
 
@@ -483,6 +496,7 @@
 
         </GridPane>
 
-    </VBox>
-
-</VBox>
+       </VBox>
+     </VBox>
+    </content>
+</ScrollPane>

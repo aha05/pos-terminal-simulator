@@ -39,47 +39,44 @@ public class TerminalRepository {
         }
     }
 
-    public Terminal findByTerminalId(String terminalId) throws SQLException {
+    public Terminal findFirst() throws SQLException {
 
         String sql = """
-                SELECT
-                    id,
-                    terminal_id,
-                    merchant_id,
-                    serial_number,
-                    currency,
-                    status
-                FROM terminal
-                WHERE terminal_id = ?
-                """;
+            SELECT
+                id,
+                terminal_id,
+                merchant_id,
+                serial_number,
+                currency,
+                status
+            FROM terminal
+            ORDER BY id ASC
+            LIMIT 1
+            """;
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
-            statement.setString(1, terminalId);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-
-                if (resultSet.next()) {
-                    return mapRow(resultSet);
-                }
-
-                return null;
+            if (resultSet.next()) {
+                return mapRow(resultSet);
             }
+
+            return null;
         }
     }
 
     public void update(Terminal terminal) throws SQLException {
 
         String sql = """
-                UPDATE terminal
-                SET
-                    merchant_id = ?,
-                    serial_number = ?,
-                    currency = ?,
-                    status = ?
-                WHERE terminal_id = ?
-                """;
+            UPDATE terminal
+            SET
+                merchant_id = ?,
+                serial_number = ?,
+                currency = ?,
+                status = ?
+            WHERE id = ?
+            """;
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -88,7 +85,7 @@ public class TerminalRepository {
             statement.setString(2, terminal.getSerialNumber());
             statement.setString(3, terminal.getCurrency());
             statement.setString(4, terminal.getStatus());
-            statement.setString(5, terminal.getTerminalId());
+            statement.setLong(5, terminal.getId());
 
             statement.executeUpdate();
         }

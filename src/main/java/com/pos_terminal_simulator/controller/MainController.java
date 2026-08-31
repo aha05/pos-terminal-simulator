@@ -2,10 +2,7 @@ package com.pos_terminal_simulator.controller;
 
 import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.scheduler.HeartbeatScheduler;
-import com.pos_terminal_simulator.service.HeartbeatService;
-import com.pos_terminal_simulator.service.PaymentService;
-import com.pos_terminal_simulator.service.SettingsService;
-import com.pos_terminal_simulator.service.TerminalService;
+import com.pos_terminal_simulator.service.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,13 +16,6 @@ public class MainController {
     @FXML
     private StackPane contentArea;
 
-
-    /*
-     * =========================================================
-     * SERVICES
-     * =========================================================
-     */
-
     private Terminal terminal;
 
     private HeartbeatService heartbeatService;
@@ -34,24 +24,21 @@ public class MainController {
 
     private SettingsService settingsService;
 
+    private TerminalDetailsService terminalDetailsService;
+
     private TerminalService terminalService;
 
     private PaymentService paymentService;
 
-
-    /*
-     * =========================================================
-     * INITIALIZATION
-     * =========================================================
-     */
 
     public void initialize(
             Terminal terminal,
             HeartbeatService heartbeatService,
             HeartbeatScheduler heartbeatScheduler,
             SettingsService settingsService,
-            TerminalService terminalService,
-            PaymentService paymentService
+            TerminalDetailsService terminalDetailsService,
+            PaymentService paymentService,
+            TerminalService terminalService
     ) {
 
         this.terminal =
@@ -66,21 +53,16 @@ public class MainController {
         this.settingsService =
                 settingsService;
 
-        this.terminalService =
-                terminalService;
+        this.terminalDetailsService =
+                terminalDetailsService;
 
         this.paymentService =
                 paymentService;
 
+        this.terminalService = terminalService;
+
         showDashboard();
     }
-
-
-    /*
-     * =========================================================
-     * DASHBOARD
-     * =========================================================
-     */
 
     @FXML
     private void showDashboard() {
@@ -95,18 +77,13 @@ public class MainController {
 
                     dashboardController.initialize(
                             terminal,
-                            settingsService
+                            settingsService,
+                            heartbeatScheduler
                     );
                 }
         );
     }
 
-
-    /*
-     * =========================================================
-     * PAYMENT
-     * =========================================================
-     */
 
     @FXML
     private void showPayment() {
@@ -128,19 +105,6 @@ public class MainController {
     }
 
 
-    /*
-     * =========================================================
-     * HEARTBEAT
-     * =========================================================
-     */
-
-
-    /*
-     * =========================================================
-     * TERMINAL DETAILS
-     * =========================================================
-     */
-
     @FXML
     private void showTerminalDetails() {
 
@@ -155,18 +119,12 @@ public class MainController {
 
                     terminalDetailsController.initialize(
                             terminal,
-                            terminalService
+                            terminalDetailsService
                     );
                 }
         );
     }
 
-
-    /*
-     * =========================================================
-     * SETTINGS
-     * =========================================================
-     */
 
     @FXML
     private void showSettings() {
@@ -180,19 +138,13 @@ public class MainController {
                             (SettingsController) controller;
 
                     settingsController.initialize(
-                            terminal,
+                            terminalService.findFirst(),
                             settingsService
                     );
                 }
         );
     }
 
-
-    /*
-     * =========================================================
-     * GENERIC FXML LOADER
-     * =========================================================
-     */
 
     private void load(
             String resource,
@@ -267,12 +219,6 @@ public class MainController {
     }
 
 
-    /*
-     * =========================================================
-     * EXIT
-     * =========================================================
-     */
-
     @FXML
     private void exit() {
 
@@ -288,12 +234,6 @@ public class MainController {
         System.exit(0);
     }
 
-
-    /*
-     * =========================================================
-     * FUNCTIONAL INTERFACE
-     * =========================================================
-     */
 
     @FunctionalInterface
     private interface ControllerInitializer {

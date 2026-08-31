@@ -1,45 +1,48 @@
 package com.pos_terminal_simulator.service;
 
-import com.pos_terminal_simulator.dto.TerminalDetailsResponse;
 import com.pos_terminal_simulator.entity.Terminal;
+import com.pos_terminal_simulator.repository.TerminalRepository;
+
+import java.sql.SQLException;
 
 public class TerminalService {
+    private final TerminalRepository terminalRepository;
 
-    private final Terminal terminal;
-
-    public TerminalService(
-            Terminal terminal
-    ) {
-        this.terminal = terminal;
+    public TerminalService(TerminalRepository terminalRepository){
+        this.terminalRepository = terminalRepository;
     }
 
-    public TerminalDetailsResponse getTerminalDetails() {
+    public void saveTerminal(Terminal terminal) {
+        try {
+            terminalRepository.save(terminal);
+        } catch (SQLException e) {
+            System.out.println(
+                    "Failed to save terminal: " + e.getMessage()
+            );
+        }
+    }
 
-        TerminalDetailsResponse response =
-                new TerminalDetailsResponse();
+    public Terminal findFirst() {
+        try {
+           return terminalRepository.findFirst();
+        } catch (SQLException e) {
+            System.out.println(
+                    "Terminal not configured yet: " + e.getMessage()
+            );
+        }
 
-        response.setTerminalId(
-                terminal.getTerminalId()
-        );
+        return null;
+    }
 
-        response.setMerchantId(
-                terminal.getMerchantId()
-        );
-
-        response.setSerialNumber(
-                terminal.getSerialNumber()
-        );
-
-        response.setModel(
-                terminal.getTerminalModel()
-        );
-
-        response.setSoftwareVersion(
-                terminal.getSoftwareVersion()
-        );
-
-        response.setStatus("ONLINE");
-
-        return response;
+    public void updateTerminal (Terminal terminal){
+        try {
+            terminalRepository.update(terminal);
+        } catch (SQLException e) {
+            System.out.println(
+                    "Terminal not configured yet: " + e.getMessage()
+            );
+        }
     }
 }
+
+

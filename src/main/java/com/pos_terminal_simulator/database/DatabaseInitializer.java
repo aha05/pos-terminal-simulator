@@ -80,36 +80,6 @@ public class DatabaseInitializer {
                     "SUCCESS: CONNECTION_SETTINGS table SQL executed."
             );
 
-            // VERIFY TABLES
-            System.out.println("========================================");
-            System.out.println("Verifying database tables...");
-            System.out.println("========================================");
-
-            try (ResultSet resultSet = statement.executeQuery("""
-                    SELECT TABLE_SCHEMA, TABLE_NAME
-                    FROM INFORMATION_SCHEMA.TABLES
-                    WHERE TABLE_TYPE = 'BASE TABLE'
-                      AND TABLE_SCHEMA = 'PUBLIC'
-                    ORDER BY TABLE_NAME
-                    """)) {
-
-                while (resultSet.next()) {
-
-                    String schema =
-                            resultSet.getString("TABLE_SCHEMA");
-
-                    String table =
-                            resultSet.getString("TABLE_NAME");
-
-                    System.out.println(
-                            "FOUND TABLE: "
-                                    + schema
-                                    + "."
-                                    + table
-                    );
-                }
-            }
-
             System.out.println("========================================");
             System.out.println("Database initialization completed.");
             System.out.println("========================================");

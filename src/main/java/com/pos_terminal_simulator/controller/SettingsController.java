@@ -1,7 +1,9 @@
 package com.pos_terminal_simulator.controller;
 
+import com.pos_terminal_simulator.config.AppConfig;
 import com.pos_terminal_simulator.entity.Terminal;
 import com.pos_terminal_simulator.service.SettingsService;
+import com.pos_terminal_simulator.service.TerminalService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -43,14 +45,7 @@ public class SettingsController {
     @FXML
     private TextField networkType;
 
-
-    /*
-     * =========================================================
-     * JAVAFX INITIALIZATION
-     * =========================================================
-     *
-     * Called automatically after Settings.fxml is loaded.
-     */
+    private AppConfig appConfig;
 
 
     @FXML
@@ -115,43 +110,22 @@ public class SettingsController {
     }
 
 
-    /*
-     * =========================================================
-     * APPLICATION INITIALIZATION
-     * =========================================================
-     *
-     * Called from MainController after FXMLLoader loads
-     * this page.
-     */
-    public void initialize(
-            Terminal terminal,
-            SettingsService settingsService
-    ) {
+    public void initialize(Terminal terminal, SettingsService settingsService) {
 
         System.out.println(
                 "Settings application initialization"
         );
 
-
-        /*
-         * For now use sample values.
-         *
-         * Later these should come from:
-         *
-         * Terminal
-         * SettingsService
-         */
-
         terminalIdField.setText(
-                "TERM0001"
+                terminal.getTerminalId()
         );
 
         merchantIdField.setText(
-                "MERCHANT000001"
+                terminal.getMerchantId()
         );
 
         serialNumberField.setText(
-                "SN-000001"
+                terminal.getSerialNumber()
         );
 
         posManagementUrlField.setText(
@@ -166,17 +140,11 @@ public class SettingsController {
                 "5000"
         );
 
-        firmwareVersion.setText("1.0.0");
+        firmwareVersion.setText(terminal.getSoftwareVersion());
 
         networkType.setText("4GLTE");
     }
 
-
-    /*
-     * =========================================================
-     * SEND HEARTBEAT
-     * =========================================================
-     */
 
     @FXML
     private void sendHeartbeat() {
@@ -196,12 +164,6 @@ public class SettingsController {
          */
     }
 
-
-    /*
-     * =========================================================
-     * SAVE SETTINGS
-     * =========================================================
-     */
 
     @FXML
     private void saveSettings() {
@@ -226,9 +188,46 @@ public class SettingsController {
                 currencyComboBox
                         .getValue();
 
+        String firmwareVersion =
+                this.firmwareVersion
+                        .getText();
+
+        String serialNumberField = this.serialNumberField.getText();
+
+
+        Terminal terminal = new Terminal.Builder()
+                .terminalId(terminalId)
+                .merchantId(merchantId)
+                .serialNumber(serialNumberField)
+                .terminalModel("POS-X100")
+                .softwareVersion(firmwareVersion)
+                .currency(currency)
+                .status("ONLINE")
+                .build();
+
+
 
         System.out.println(
                 "Saving settings..."
+        );
+
+
+        appConfig = new AppConfig();
+        TerminalService terminalService = new TerminalService(appConfig.getTerminalRepository());
+        Terminal existingTerminal = terminalService.findFirst();
+        System.out.println("existing terminal: " + existingTerminal);
+        if(existingTerminal == null) {
+            terminalService.saveTerminal(terminal);
+        } else {
+            terminal.setId(existingTerminal.getId());
+            System.out.println(existingTerminal.getId());
+            terminalService.updateTerminal(terminal);
+        }
+
+
+
+        System.out.println(
+                "Terminal settings saved"
         );
 
         System.out.println(
@@ -258,31 +257,10 @@ public class SettingsController {
         );
 
 
-        /*
-         * TODO:
-         *
-         * settingsService.save(...)
-         *
-         * Then:
-         *
-         * schedulerManager.startHeartbeat(...)
-         *
-         * or
-         *
-         * schedulerManager.stopHeartbeat()
-         */
-
         statusLabel.setText(
                 "Settings saved successfully."
         );
     }
-
-
-    /*
-     * =========================================================
-     * RESET SETTINGS
-     * =========================================================
-     */
 
     @FXML
     private void resetSettings() {

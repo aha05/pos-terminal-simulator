@@ -2,6 +2,7 @@ package com.pos_terminal_simulator.controller;
 
 import com.pos_terminal_simulator.entity.Settings;
 import com.pos_terminal_simulator.entity.Terminal;
+import com.pos_terminal_simulator.scheduler.HeartbeatScheduler;
 import com.pos_terminal_simulator.service.SettingsService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,7 +16,7 @@ public class DashboardController {
     private Label merchantIdLabel;
 
     @FXML
-    private Label posStatusLabel;
+    private Label terminalStatusLabel;
 
     @FXML
     private Label heartbeatStatusLabel;
@@ -25,12 +26,12 @@ public class DashboardController {
 
     private Terminal terminal;
     private SettingsService settingsService;
-//    private SchedulerManager schedulerManager;
+    private HeartbeatScheduler heartbeatScheduler;
 
     public void initialize(
             Terminal terminal,
-            SettingsService settingsService
-//            SchedulerManager schedulerManager
+            SettingsService settingsService,
+            HeartbeatScheduler heartbeatScheduler
     ) {
 
         this.terminal =
@@ -39,8 +40,8 @@ public class DashboardController {
         this.settingsService =
                 settingsService;
 
-//        this.schedulerManager =
-//                schedulerManager;
+        this.heartbeatScheduler =
+                heartbeatScheduler;
 
         refresh();
     }
@@ -58,17 +59,17 @@ public class DashboardController {
         Settings settings =
                 settingsService.getSettings();
 
-//        heartbeatStatusLabel.setText(
-//                schedulerManager.isHeartbeatRunning()
-//                        ? "RUNNING"
-//                        : "STOPPED"
-//        );
+        heartbeatStatusLabel.setText(
+                heartbeatScheduler.isRunning()
+                        ? "RUNNING"
+                        : "STOPPED"
+        );
 
-//        heartbeatIntervalLabel.setText(
-//                settings.getHeartbeatIntervalSeconds()
-//                        + " seconds"
-//        );
+        heartbeatIntervalLabel.setText(
+                settings.getHeartbeatIntervalSeconds()
+                        + " seconds"
+        );
 
-//        posStatusLabel.setText("ONLINE");
+        terminalStatusLabel.setText("ONLINE");
     }
 }
