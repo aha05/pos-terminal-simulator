@@ -52,6 +52,9 @@
                 text="Create and send an ISO 8583 payment request"
                 style="-fx-font-size: 14px;
                        -fx-text-fill: #666666;"/>
+        <Button
+                text="← Back"
+                onAction="#navigateBack"/>
 
     </VBox>
 

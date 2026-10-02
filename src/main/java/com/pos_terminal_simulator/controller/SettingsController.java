@@ -1,10 +1,12 @@
 package com.pos_terminal_simulator.controller;
 
-import com.pos_terminal_simulator.config.AppConfig;
+import com.pos_terminal_simulator.context.AppContext;
 import com.pos_terminal_simulator.entity.Terminal;
-import com.pos_terminal_simulator.service.SettingsService;
+import com.pos_terminal_simulator.service.NavigationService;
 import com.pos_terminal_simulator.service.TerminalService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 
 public class SettingsController {
@@ -45,7 +47,12 @@ public class SettingsController {
     @FXML
     private TextField networkType;
 
-    private AppConfig appConfig;
+    private TerminalService terminalService;
+
+    private AppContext appContext;
+
+    private final NavigationService navigationService =
+            new NavigationService();
 
 
     @FXML
@@ -110,39 +117,57 @@ public class SettingsController {
     }
 
 
-    public void initialize(Terminal terminal, SettingsService settingsService) {
+    public void initialize(AppContext appContext) {
 
         System.out.println(
                 "Settings application initialization"
         );
+        this.appContext = appContext;
+        this.terminalService = appContext.getTerminalService();
 
-        terminalIdField.setText(
-                terminal.getTerminalId()
-        );
+        if (appContext.getTerminal() != null) {
+            terminalIdField.setText(
+                    appContext.getTerminal().getTerminalId()
+            );
 
-        merchantIdField.setText(
-                terminal.getMerchantId()
-        );
+            merchantIdField.setText(
+                    appContext.getTerminal().getMerchantId()
+            );
 
-        serialNumberField.setText(
-                terminal.getSerialNumber()
-        );
+            serialNumberField.setText(
+                    appContext.getTerminal().getSerialNumber()
+            );
 
-        posManagementUrlField.setText(
-                "http://localhost:8080"
-        );
+            firmwareVersion.setText(appContext.getTerminal().getSoftwareVersion());
+        } else {
+            terminalIdField.setText(
+                    "TRM00001"
+            );
 
-        switchHostField.setText(
-                "127.0.0.1"
-        );
+            merchantIdField.setText(
+                    "MRC00001"
+            );
 
-        switchPortField.setText(
-                "5000"
-        );
+            serialNumberField.setText(
+                    "SN00001"
+            );
 
-        firmwareVersion.setText(terminal.getSoftwareVersion());
+            firmwareVersion.setText("1.0.0");
 
-        networkType.setText("4GLTE");
+            posManagementUrlField.setText(
+                    "http://localhost:8080"
+            );
+
+            switchHostField.setText(
+                    "127.0.0.1"
+            );
+
+            switchPortField.setText(
+                    "5000"
+            );
+
+            networkType.setText("4GLTE");
+        }
     }
 
 
@@ -212,8 +237,7 @@ public class SettingsController {
         );
 
 
-        appConfig = new AppConfig();
-        TerminalService terminalService = new TerminalService(appConfig.getTerminalRepository());
+
         Terminal existingTerminal = terminalService.findFirst();
         System.out.println("existing terminal: " + existingTerminal);
         if(existingTerminal == null) {
@@ -279,6 +303,25 @@ public class SettingsController {
 
         statusLabel.setText(
                 "Settings reset."
+        );
+    }
+
+    @FXML
+    private void navigateBack(ActionEvent event) {
+
+        navigationService.navigate(
+                (Node) event.getSource(),
+                "/view/Main.fxml",
+
+                controller -> {
+
+                    MainController mainController =
+                            (MainController) controller;
+
+                    mainController.initialize(
+                            appContext
+                    );
+                }
         );
     }
 }

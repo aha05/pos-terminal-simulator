@@ -56,6 +56,10 @@
                         style="-fx-font-size: 14px;
                                -fx-text-fill: #666666;"/>
 
+                <Button
+                        text="← Back"
+                        onAction="#navigateBack"/>
+
             </VBox>
 
 

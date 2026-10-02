@@ -1,75 +1,50 @@
 package com.pos_terminal_simulator.controller;
 
-import com.pos_terminal_simulator.entity.Settings;
-import com.pos_terminal_simulator.entity.Terminal;
-import com.pos_terminal_simulator.scheduler.HeartbeatScheduler;
-import com.pos_terminal_simulator.service.SettingsService;
+import com.pos_terminal_simulator.context.AppContext;
+import com.pos_terminal_simulator.service.NavigationService;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
 
 public class DashboardController {
 
-    @FXML
-    private Label terminalIdLabel;
+    private AppContext appContext;
 
-    @FXML
-    private Label merchantIdLabel;
+    private final NavigationService navigationService =
+            new NavigationService();
 
-    @FXML
-    private Label terminalStatusLabel;
 
-    @FXML
-    private Label heartbeatStatusLabel;
+    public void initialize(AppContext appContext) {
 
-    @FXML
-    private Label heartbeatIntervalLabel;
+        this.appContext = appContext;
 
-    private Terminal terminal;
-    private SettingsService settingsService;
-    private HeartbeatScheduler heartbeatScheduler;
-
-    public void initialize(
-            Terminal terminal,
-            SettingsService settingsService,
-            HeartbeatScheduler heartbeatScheduler
-    ) {
-
-        this.terminal =
-                terminal;
-
-        this.settingsService =
-                settingsService;
-
-        this.heartbeatScheduler =
-                heartbeatScheduler;
-
-        refresh();
+        // Your existing dashboard initialization here
+        // Example:
+        //
+        // Terminal terminal = appContext.getTerminal();
+        // SettingsService settingsService = appContext.getSettingsService();
+        // HeartbeatScheduler scheduler =
+        //         appContext.getHeartbeatScheduler();
     }
 
-    private void refresh() {
 
-        terminalIdLabel.setText(
-                terminal.getTerminalId()
+    @FXML
+    private void navigateBack(ActionEvent event) {
+
+        navigationService.navigate(
+                (Node) event.getSource(),
+                "/view/Main.fxml",
+
+                controller -> {
+
+                    MainController mainController =
+                            (MainController) controller;
+
+                    mainController.initialize(
+                            appContext
+                    );
+                }
         );
-
-        merchantIdLabel.setText(
-                terminal.getMerchantId()
-        );
-
-        Settings settings =
-                settingsService.getSettings();
-
-        heartbeatStatusLabel.setText(
-                heartbeatScheduler.isRunning()
-                        ? "RUNNING"
-                        : "STOPPED"
-        );
-
-        heartbeatIntervalLabel.setText(
-                settings.getHeartbeatIntervalSeconds()
-                        + " seconds"
-        );
-
-        terminalStatusLabel.setText("ONLINE");
     }
 }

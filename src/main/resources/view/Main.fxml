@@ -1,67 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
+
 <BorderPane
         xmlns="http://javafx.com/javafx/17"
         xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="com.pos_terminal_simulator.controller.MainController">
-
-    <left>
-
-        <VBox
-                prefWidth="220"
-                spacing="10"
-                style="-fx-padding: 20;">
-
-            <Label
-                    text="POS SIMULATOR"
-                    style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-
-            <Separator/>
-
-            <Button
-                    text="Dashboard"
-                    maxWidth="Infinity"
-                    onAction="#showDashboard"/>
-
-            <Button
-                    text="Payment"
-                    maxWidth="Infinity"
-                    onAction="#showPayment"/>
-
-            <Separator/>
-
-            <Label
-                    text="POS"
-                    style="-fx-font-weight: bold;"/>
-
-            <Button
-                    text="POS Details"
-                    maxWidth="Infinity"
-                    onAction="#showTerminalDetails"/>
-
-            <Button
-                    text="Settings"
-                    maxWidth="Infinity"
-                    onAction="#showSettings"/>
-
-            <Separator/>
-
-            <Button
-                    text="Exit"
-                    maxWidth="Infinity"
-                    onAction="#exit"/>
-
-        </VBox>
-
-    </left>
+        fx:controller="com.pos_terminal_simulator.controller.MainController"
+        style="-fx-background-color: #f5f7fa;">
 
     <center>
 
-        <StackPane fx:id="contentArea"/>
+        <VBox
+                alignment="CENTER"
+                spacing="20">
+
+            <padding>
+                <Insets
+                        top="30"
+                        right="30"
+                        bottom="30"
+                        left="30"/>
+            </padding>
+
+            <!-- HEADER -->
+
+            <Label
+                    text="POS SIMULATOR"
+                    style="-fx-font-size: 24px;
+                           -fx-font-weight: bold;"/>
+
+            <Separator
+                    prefWidth="400"/>
+
+
+            <!-- MENU -->
+
+            <GridPane
+                    hgap="15"
+                    vgap="15"
+                    alignment="CENTER">
+
+                <!-- DASHBOARD -->
+
+                <Button
+                        GridPane.columnIndex="0"
+                        GridPane.rowIndex="0"
+                        onAction="#showDashboard"
+                        prefWidth="180"
+                        prefHeight="130"
+                        style="-fx-background-color: white;
+                               -fx-background-radius: 10;
+                               -fx-border-color: #dddddd;
+                               -fx-border-radius: 10;">
+
+                    <graphic>
+
+                        <VBox
+                                alignment="CENTER"
+                                spacing="10">
+
+                            <Label
+                                    text="⌂"
+                                    style="-fx-font-size: 32px;"/>
+
+                            <Label
+                                    text="Dashboard"
+                                    style="-fx-font-size: 15px;
+                                           -fx-font-weight: bold;"/>
+
+                        </VBox>
+
+                    </graphic>
+
+                </Button>
+
+
+                <!-- PAYMENT -->
+
+                <Button
+                        GridPane.columnIndex="1"
+                        GridPane.rowIndex="0"
+                        onAction="#showPayment"
+                        prefWidth="180"
+                        prefHeight="130"
+                        style="-fx-background-color: white;
+                               -fx-background-radius: 10;
+                               -fx-border-color: #dddddd;
+                               -fx-border-radius: 10;">
+
+                    <graphic>
+
+                        <VBox
+                                alignment="CENTER"
+                                spacing="10">
+
+                            <Label
+                                    text="💳"
+                                    style="-fx-font-size: 32px;"/>
+
+                            <Label
+                                    text="Payment"
+                                    style="-fx-font-size: 15px;
+                                           -fx-font-weight: bold;"/>
+
+                        </VBox>
+
+                    </graphic>
+
+                </Button>
+
+
+                <!-- SETTINGS -->
+
+                <Button
+                        GridPane.columnIndex="0"
+                        GridPane.rowIndex="1"
+                        onAction="#showSettings"
+                        prefWidth="180"
+                        prefHeight="130"
+                        style="-fx-background-color: white;
+                               -fx-background-radius: 10;
+                               -fx-border-color: #dddddd;
+                               -fx-border-radius: 10;">
+
+                    <graphic>
+
+                        <VBox
+                                alignment="CENTER"
+                                spacing="10">
+
+                            <Label
+                                    text="⚙"
+                                    style="-fx-font-size: 32px;"/>
+
+                            <Label
+                                    text="Settings"
+                                    style="-fx-font-size: 15px;
+                                           -fx-font-weight: bold;"/>
+
+                        </VBox>
+
+                    </graphic>
+
+                </Button>
+
+
+                <!-- EXIT -->
+
+                <Button
+                        GridPane.columnIndex="1"
+                        GridPane.rowIndex="1"
+                        onAction="#exit"
+                        prefWidth="180"
+                        prefHeight="130"
+                        style="-fx-background-color: white;
+                               -fx-background-radius: 10;
+                               -fx-border-color: #dddddd;
+                               -fx-border-radius: 10;">
+
+                    <graphic>
+
+                        <VBox
+                                alignment="CENTER"
+                                spacing="10">
+
+                            <Label
+                                    text="⏻"
+                                    style="-fx-font-size: 32px;"/>
+
+                            <Label
+                                    text="Exit"
+                                    style="-fx-font-size: 15px;
+                                           -fx-font-weight: bold;"/>
+
+                        </VBox>
+
+                    </graphic>
+
+                </Button>
+
+            </GridPane>
+
+        </VBox>
 
     </center>
 

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pos_terminal_simulator.client.PosApiClient;
 import com.pos_terminal_simulator.client.PosManagementClient;
 import com.pos_terminal_simulator.client.SwitchClient;
+import com.pos_terminal_simulator.client.iso8583.Iso8583Mapper;
 import com.pos_terminal_simulator.config.ApiConfig;
 import com.pos_terminal_simulator.config.AppConfig;
+import com.pos_terminal_simulator.context.AppContext;
 import com.pos_terminal_simulator.controller.MainController;
 import com.pos_terminal_simulator.database.DatabaseInitializer;
 import com.pos_terminal_simulator.database.DatabaseManager;
@@ -26,8 +28,6 @@ public class PosSimulatorApplication extends Application {
 
     private SettingsService settingsService;
 
-    private TerminalDetailsService terminalDetailsService;
-
     private PaymentService paymentService;
 
     private HeartbeatService heartbeatService;
@@ -37,6 +37,8 @@ public class PosSimulatorApplication extends Application {
     private TerminalService terminalService;
 
     private AppConfig appConfig;
+
+    private Iso8583Mapper iso8583Mapper;
 
 
     @Override
@@ -98,17 +100,13 @@ public class PosSimulatorApplication extends Application {
 
                         appConfig
                                 .getApiConfig()
-                                .getSwitchPort()
+                                .getSwitchPort(),
+                        iso8583Mapper
                 );
 
         settingsService =
                 new SettingsService();
 
-
-        terminalDetailsService =
-                new TerminalDetailsService(
-                        terminal
-                );
 
         paymentService =
                 new PaymentService(
@@ -169,22 +167,16 @@ public class PosSimulatorApplication extends Application {
 
         appConfig = new AppConfig();
 
-        controller.initialize(
-
+        AppContext appContext = new AppContext(
                 terminal,
-
                 heartbeatService,
-
                 heartbeatScheduler,
-
                 settingsService,
-
-                terminalDetailsService,
-
-                paymentService,
-
-                terminalService
+                terminalService,
+                paymentService
         );
+
+        controller.initialize(appContext);
 
 
 

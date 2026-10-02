@@ -1,73 +1,38 @@
 package com.pos_terminal_simulator.controller;
 
-import com.pos_terminal_simulator.entity.Terminal;
-import com.pos_terminal_simulator.scheduler.HeartbeatScheduler;
-import com.pos_terminal_simulator.service.*;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
+import com.pos_terminal_simulator.context.AppContext;
+import com.pos_terminal_simulator.service.NavigationService;
 
-import java.io.IOException;
-import java.net.URL;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
 
 public class MainController {
 
-    @FXML
-    private StackPane contentArea;
+    private AppContext appContext;
 
-    private Terminal terminal;
-
-    private HeartbeatService heartbeatService;
-
-    private HeartbeatScheduler heartbeatScheduler;
-
-    private SettingsService settingsService;
-
-    private TerminalDetailsService terminalDetailsService;
-
-    private TerminalService terminalService;
-
-    private PaymentService paymentService;
+    /*
+     * This is created when FXMLLoader creates MainController.
+     *
+     * It must NOT depend on your custom initialize() method.
+     */
+    private final NavigationService navigationService =
+            new NavigationService();
 
 
-    public void initialize(
-            Terminal terminal,
-            HeartbeatService heartbeatService,
-            HeartbeatScheduler heartbeatScheduler,
-            SettingsService settingsService,
-            TerminalDetailsService terminalDetailsService,
-            PaymentService paymentService,
-            TerminalService terminalService
-    ) {
-
-        this.terminal =
-                terminal;
-
-        this.heartbeatService =
-                heartbeatService;
-
-        this.heartbeatScheduler =
-                heartbeatScheduler;
-
-        this.settingsService =
-                settingsService;
-
-        this.terminalDetailsService =
-                terminalDetailsService;
-
-        this.paymentService =
-                paymentService;
-
-        this.terminalService = terminalService;
-
-        showDashboard();
+    /**
+     * Called manually by the Application class.
+     */
+    public void initialize(AppContext appContext) {
+        this.appContext = appContext;
     }
 
-    @FXML
-    private void showDashboard() {
 
-        load(
+    @FXML
+    private void showDashboard(ActionEvent event) {
+
+        navigationService.navigate(
+                (Node) event.getSource(),
                 "/view/pages/Dashboard.fxml",
 
                 controller -> {
@@ -76,9 +41,7 @@ public class MainController {
                             (DashboardController) controller;
 
                     dashboardController.initialize(
-                            terminal,
-                            settingsService,
-                            heartbeatScheduler
+                            appContext
                     );
                 }
         );
@@ -86,9 +49,10 @@ public class MainController {
 
 
     @FXML
-    private void showPayment() {
+    private void showPayment(ActionEvent event) {
 
-        load(
+        navigationService.navigate(
+                (Node) event.getSource(),
                 "/view/pages/Payment.fxml",
 
                 controller -> {
@@ -97,8 +61,7 @@ public class MainController {
                             (PaymentController) controller;
 
                     paymentController.initialize(
-                            terminal,
-                            paymentService
+                            appContext
                     );
                 }
         );
@@ -106,30 +69,10 @@ public class MainController {
 
 
     @FXML
-    private void showTerminalDetails() {
+    private void showSettings(ActionEvent event) {
 
-        load(
-                "/view/pages/TerminalDetails.fxml",
-
-                controller -> {
-
-                    TerminalDetailsController
-                            terminalDetailsController =
-                            (TerminalDetailsController) controller;
-
-                    terminalDetailsController.initialize(
-                            terminal,
-                            terminalDetailsService
-                    );
-                }
-        );
-    }
-
-
-    @FXML
-    private void showSettings() {
-
-        load(
+        navigationService.navigate(
+                (Node) event.getSource(),
                 "/view/pages/Settings.fxml",
 
                 controller -> {
@@ -138,106 +81,24 @@ public class MainController {
                             (SettingsController) controller;
 
                     settingsController.initialize(
-                            terminalService.findFirst(),
-                            settingsService
+                            appContext
                     );
                 }
         );
-    }
-
-
-    private void load(
-            String resource,
-            ControllerInitializer initializer
-    ) {
-
-        try {
-
-            URL url =
-                    getClass()
-                            .getResource(resource);
-
-            System.out.println(
-                    "Loading FXML: "
-                            + resource
-            );
-
-            System.out.println(
-                    "Resolved URL: "
-                            + url
-            );
-
-            if (url == null) {
-
-                throw new IllegalStateException(
-                        "FXML NOT FOUND: "
-                                + resource
-                );
-            }
-
-            FXMLLoader loader =
-                    new FXMLLoader(url);
-
-            Node view =
-                    loader.load();
-
-            Object controller =
-                    loader.getController();
-
-            System.out.println(
-                    "Loaded controller: "
-                            + controller
-            );
-
-            if (initializer != null) {
-
-                if (controller == null) {
-
-                    throw new IllegalStateException(
-                            "FXML loaded but controller is null: "
-                                    + resource
-                    );
-                }
-
-                initializer.initialize(
-                        controller
-                );
-            }
-
-            contentArea
-                    .getChildren()
-                    .setAll(view);
-
-        } catch (IOException e) {
-
-            throw new RuntimeException(
-                    "Failed to load FXML: "
-                            + resource,
-                    e
-            );
-        }
     }
 
 
     @FXML
     private void exit() {
 
-        if (heartbeatScheduler != null) {
+        if (appContext != null &&
+                appContext.getHeartbeatScheduler() != null) {
 
-            heartbeatScheduler.shutdown();
+            appContext.getHeartbeatScheduler().shutdown();
         }
 
-        System.out.println(
-                "Exiting POS Simulator..."
-        );
+        System.out.println("Exiting POS Simulator...");
 
         System.exit(0);
-    }
-
-
-    @FunctionalInterface
-    private interface ControllerInitializer {
-
-        void initialize(Object controller);
     }
 }

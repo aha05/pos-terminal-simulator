@@ -6,6 +6,7 @@ public class PaymentRequest {
 
     private String terminalId;
     private String merchantId;
+    private String processingCode;
     private BigDecimal amount;
     private String currency;
     private String pan;
@@ -48,5 +49,13 @@ public class PaymentRequest {
 
     public void setPan(String pan) {
         this.pan = pan;
+    }
+
+    public String getProcessingCode() {
+        return processingCode;
+    }
+
+    public void setProcessingCode(String processingCode) {
+        this.processingCode = processingCode;
     }
 }
