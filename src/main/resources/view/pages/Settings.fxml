@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
@@ -43,25 +42,35 @@
             <!-- =========================================================
                  HEADER
                  ========================================================= -->
+            <HBox
+                    alignment="TOP_LEFT"
+                    spacing="10">
 
-            <VBox spacing="5">
+                <!-- Left side -->
+                <VBox
+                        spacing="5"
+                        HBox.hgrow="ALWAYS">
 
-                <Label
-                        text="Settings"
-                        style="-fx-font-size: 28px;
+                    <Label
+                            text="Settings"
+                            style="-fx-font-size: 28px;
                                -fx-font-weight: bold;"/>
 
-                <Label
-                        text="Configure POS terminal and simulator settings"
-                        style="-fx-font-size: 14px;
+                    <Label
+                            text="Configure POS terminal and simulator settings"
+                            style="-fx-font-size: 14px;
                                -fx-text-fill: #666666;"/>
 
+                </VBox>
+
+                <!-- Right side -->
                 <Button
                         text="← Back"
-                        onAction="#navigateBack"/>
+                        onAction="#navigateBack"
+                        prefWidth="90"
+                        prefHeight="25"/>
 
-            </VBox>
-
+            </HBox>
 
             <Separator/>
 
@@ -89,37 +98,30 @@
                         style="-fx-text-fill: #666666;"/>
 
 
-                <GridPane
-                        hgap="20"
-                        vgap="15">
+                <!-- Automatic Heartbeat -->
 
-                    <!-- Auto Heartbeat -->
+                <VBox spacing="5">
 
                     <Label
                             text="Automatic Heartbeat"
-                            GridPane.rowIndex="0"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <CheckBox
                             fx:id="autoHeartbeatCheckBox"
-                            text="Enable automatic heartbeat"
-                            GridPane.rowIndex="0"
-                            GridPane.columnIndex="1"/>
+                            text="Enable automatic heartbeat"/>
+
+                </VBox>
 
 
-                    <!-- Interval -->
+                <!-- Heartbeat Interval -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Heartbeat Interval"
-                            GridPane.rowIndex="1"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
-                    <HBox
-                            spacing="10"
-                            GridPane.rowIndex="1"
-                            GridPane.columnIndex="1">
+                    <HBox spacing="10">
 
                         <Spinner
                                 fx:id="heartbeatIntervalSpinner"
@@ -132,24 +134,24 @@
 
                     </HBox>
 
+                </VBox>
 
-                    <!-- Manual Heartbeat -->
+
+                <!-- Manual Heartbeat -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Manual Heartbeat"
-                            GridPane.rowIndex="2"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <Button
                             fx:id="sendHeartbeatButton"
                             text="Send Heartbeat Now"
                             prefWidth="160"
-                            onAction="#sendHeartbeat"
-                            GridPane.rowIndex="2"
-                            GridPane.columnIndex="1"/>
+                            onAction="#sendHeartbeat"/>
 
-                </GridPane>
+                </VBox>
 
             </VBox>
 
@@ -173,85 +175,83 @@
                                -fx-font-weight: bold;"/>
 
 
-                <GridPane
-                        hgap="20"
-                        vgap="15">
+                <!-- Terminal ID -->
 
-                    <!-- Terminal ID -->
+                <VBox spacing="5">
 
                     <Label
                             text="Terminal ID"
-                            GridPane.rowIndex="0"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <TextField
                             fx:id="terminalIdField"
                             promptText="Terminal ID"
-                            prefWidth="350"
-                            GridPane.rowIndex="0"
-                            GridPane.columnIndex="1"/>
+                            maxWidth="Infinity"/>
+
+                </VBox>
 
 
-                    <!-- Merchant ID -->
+                <!-- Merchant ID -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Merchant ID"
-                            GridPane.rowIndex="1"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <TextField
                             fx:id="merchantIdField"
                             promptText="Merchant ID"
-                            prefWidth="350"
-                            GridPane.rowIndex="1"
-                            GridPane.columnIndex="1"/>
+                            maxWidth="Infinity"/>
+
+                </VBox>
 
 
-                    <!-- Serial Number -->
+                <!-- Serial Number -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Serial Number"
-                            GridPane.rowIndex="2"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <TextField
                             fx:id="serialNumberField"
                             promptText="Serial Number"
-                            prefWidth="350"
-                            GridPane.rowIndex="2"
-                            GridPane.columnIndex="1"/>
+                            maxWidth="Infinity"/>
+
+                </VBox>
 
 
-                    <!-- Currency -->
+                <!-- Default Currency -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Default Currency"
-                            GridPane.rowIndex="3"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <ComboBox
                             fx:id="currencyComboBox"
-                            prefWidth="350"
-                            GridPane.rowIndex="3"
-                            GridPane.columnIndex="1"/>
+                            maxWidth="Infinity"/>
+
+                </VBox>
+
+
+                <!-- Firmware Version -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Firmware Version"
-                            GridPane.rowIndex="4"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <TextField
                             fx:id="firmwareVersion"
-                            prefWidth="350"
-                            GridPane.rowIndex="4"
-                            GridPane.columnIndex="1"/>
+                            promptText="Firmware Version"
+                            maxWidth="Infinity"/>
 
-                </GridPane>
+                </VBox>
 
             </VBox>
 
@@ -275,71 +275,68 @@
                                -fx-font-weight: bold;"/>
 
 
-                <GridPane
-                        hgap="20"
-                        vgap="15">
+                <!-- POS Management URL -->
 
-                    <!-- POS Management URL -->
+                <VBox spacing="5">
 
                     <Label
                             text="POS Management URL"
-                            GridPane.rowIndex="0"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <TextField
                             fx:id="posManagementUrlField"
                             promptText="http://localhost:8080"
-                            prefWidth="450"
-                            GridPane.rowIndex="0"
-                            GridPane.columnIndex="1"/>
+                            maxWidth="Infinity"/>
+
+                </VBox>
 
 
-                    <!-- Switch Host -->
+                <!-- Switch Host -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Switch Host"
-                            GridPane.rowIndex="1"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <TextField
                             fx:id="switchHostField"
                             promptText="127.0.0.1"
-                            prefWidth="450"
-                            GridPane.rowIndex="1"
-                            GridPane.columnIndex="1"/>
+                            maxWidth="Infinity"/>
+
+                </VBox>
 
 
-                    <!-- Switch Port -->
+                <!-- Switch Port -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Switch Port"
-                            GridPane.rowIndex="2"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <TextField
                             fx:id="switchPortField"
                             promptText="5000"
-                            prefWidth="450"
-                            GridPane.rowIndex="2"
-                            GridPane.columnIndex="1"/>
+                            maxWidth="Infinity"/>
+
+                </VBox>
+
+
+                <!-- Network Type -->
+
+                <VBox spacing="5">
 
                     <Label
                             text="Network Type"
-                            GridPane.rowIndex="3"
-                            GridPane.columnIndex="0"
                             style="-fx-font-weight: bold;"/>
 
                     <TextField
                             fx:id="networkType"
-                            promptText="5000"
-                            prefWidth="450"
-                            GridPane.rowIndex="3"
-                            GridPane.columnIndex="1"/>
+                            promptText="Network Type"
+                            maxWidth="Infinity"/>
 
-                </GridPane>
+                </VBox>
 
             </VBox>
 
@@ -348,8 +345,7 @@
                  ACTIONS
                  ========================================================= -->
 
-            <HBox
-                    spacing="15">
+            <HBox spacing="15">
 
                 <Button
                         fx:id="saveButton"

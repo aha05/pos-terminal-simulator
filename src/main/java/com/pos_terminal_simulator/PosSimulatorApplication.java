@@ -40,6 +40,9 @@ public class PosSimulatorApplication extends Application {
 
     private Iso8583Mapper iso8583Mapper;
 
+    private static final double WINDOW_WIDTH = 400;
+    private static final double WINDOW_HEIGHT = 600;
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -179,20 +182,16 @@ public class PosSimulatorApplication extends Application {
         controller.initialize(appContext);
 
 
-
-        Scene scene =
-                new Scene(
-                        root,
-                        1000,
-                        650
-                );
-
-
-        stage.setTitle(
-                "POS Terminal Simulator"
-        );
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         stage.setScene(scene);
+
+        stage.setWidth(WINDOW_WIDTH);
+        stage.setHeight(WINDOW_HEIGHT);
+        stage.setMinWidth(WINDOW_WIDTH);
+        stage.setMaxWidth(WINDOW_WIDTH);
+        stage.setMinHeight(WINDOW_HEIGHT);
+        stage.setMaxHeight(WINDOW_HEIGHT);
 
         stage.show();
 

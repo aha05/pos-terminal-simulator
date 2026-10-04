@@ -13,11 +13,17 @@ import java.util.function.Consumer;
 
 public class NavigationService {
 
-    private final Stack<Scene> sceneHistory = new Stack<>();
+    private static final double WINDOW_WIDTH = 400;
+    private static final double WINDOW_HEIGHT = 600;
+
+    private final Stack<Parent> rootHistory = new Stack<>();
 
 
     /**
      * Navigate to a new page.
+     *
+     * The existing Scene and Stage are reused.
+     * Only the Scene root is replaced.
      */
     public void navigate(
             Node source,
@@ -26,17 +32,21 @@ public class NavigationService {
     ) {
 
         try {
-
             Stage stage = (Stage) source.getScene().getWindow();
+            Scene scene = stage.getScene();
 
-            // Keep the current scene
-            Scene currentScene = stage.getScene();
-
-            if (currentScene != null) {
-                sceneHistory.push(currentScene);
+            if (scene == null) {
+                throw new IllegalStateException("Stage does not have a Scene.");
             }
 
-            // Load new FXML
+            // Save the current page root
+            Parent currentRoot = scene.getRoot();
+
+            if (currentRoot != null) {
+                rootHistory.push(currentRoot);
+            }
+
+            // Load the new FXML
             URL url = getClass().getResource(resource);
 
             if (url == null) {
@@ -47,10 +57,11 @@ public class NavigationService {
 
             FXMLLoader loader = new FXMLLoader(url);
 
-            Parent root = loader.load();
+            Parent newRoot = loader.load();
 
             Object controller = loader.getController();
 
+            // Initialize controller if required
             if (initializer != null) {
 
                 if (controller == null) {
@@ -63,11 +74,11 @@ public class NavigationService {
                 initializer.accept(controller);
             }
 
-            // Create new scene
-            Scene newScene = new Scene(root);
+            // Replace only the Scene root
+            scene.setRoot(newRoot);
 
-            // Replace current scene
-            stage.setScene(newScene);
+            // Keep the window size fixed
+            setFixedWindowSize(stage);
 
             stage.show();
 
@@ -93,20 +104,58 @@ public class NavigationService {
 
 
     /**
-     * Go back to the previous scene.
+     * Go back to the previous page.
+     *
+     * The existing Scene and Stage are reused.
      */
     public void back(Node source) {
 
-        if (sceneHistory.isEmpty()) {
+        if (rootHistory.isEmpty()) {
             return;
         }
 
         Stage stage = (Stage) source.getScene().getWindow();
+        Scene scene = stage.getScene();
 
-        Scene previousScene = sceneHistory.pop();
+        if (scene == null) {
+            return;
+        }
 
-        stage.setScene(previousScene);
+        // Restore previous page root
+        Parent previousRoot = rootHistory.pop();
+
+        scene.setRoot(previousRoot);
+
+        // Keep the window size fixed
+        setFixedWindowSize(stage);
 
         stage.show();
     }
+
+
+    /**
+     * Configure the application window with a fixed size.
+     */
+    private void setFixedWindowSize(Stage stage) {
+
+        stage.setWidth(WINDOW_WIDTH);
+        stage.setHeight(WINDOW_HEIGHT);
+
+        stage.setMinWidth(WINDOW_WIDTH);
+        stage.setMaxWidth(WINDOW_WIDTH);
+
+        stage.setMinHeight(WINDOW_HEIGHT);
+        stage.setMaxHeight(WINDOW_HEIGHT);
+
+        stage.setResizable(false);
+    }
+
+
+    /**
+     * Clear navigation history.
+     */
+    public void clearHistory() {
+        rootHistory.clear();
+    }
 }
+
