@@ -11,7 +11,7 @@ public class ApiConfig {
                 "http://localhost:8080";
 
         this.switchHost = "localhost";
-        this.switchPort = 9000;
+        this.switchPort = 8583;
     }
 
     public String getPosManagementBaseUrl() {

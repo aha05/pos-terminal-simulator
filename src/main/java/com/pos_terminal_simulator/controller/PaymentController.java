@@ -114,13 +114,13 @@ public class PaymentController {
                     panField.getText()
             );
 
-            PaymentResponse response =
+            String response =
                     paymentService.purchase(
                             request
                     );
 
-            responseStatusLabel.setText(response.getResponseCode());
-            responseMessageLabel.setText(response.getMessage());
+            responseStatusLabel.setText(response);
+            responseMessageLabel.setText(response);
 
         } catch (Exception e) {
             responseMessageLabel.setText(

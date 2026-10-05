@@ -6,9 +6,9 @@ import java.util.TreeMap;
 
 public class Iso8583Message {
 
-    private String mti; // Message Type Indicator: It is the first 4 digits of an ISO 8583 message and tells you what type of message it is.
+    private String mti;
 
-    private final Map<Integer, String> fields = new TreeMap<>(); // TreeMap store data in key value pairs. However, it automatically sorts the keys.
+    private final Map<Integer, String> fields = new TreeMap<>();
 
     public Iso8583Message() {
     }
@@ -25,7 +25,7 @@ public class Iso8583Message {
 
         if (mti == null || !mti.matches("\\d{4}")) {
             throw new IllegalArgumentException(
-                    "MTI must be exactly 4 numeric characters"+mti
+                    "MTI must be exactly 4 numeric characters: " + mti
             );
         }
 
@@ -46,10 +46,20 @@ public class Iso8583Message {
             );
         }
 
+        // Make sure the field is defined.
+        IsoField.fromNumber(fieldNumber);
+
         fields.put(fieldNumber, value);
     }
 
     public void setField(IsoField field, String value) {
+
+        if (field == null) {
+            throw new IllegalArgumentException(
+                    "ISO field cannot be null"
+            );
+        }
+
         setField(field.getNumber(), value);
     }
 

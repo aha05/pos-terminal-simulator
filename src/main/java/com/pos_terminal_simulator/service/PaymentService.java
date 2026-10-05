@@ -4,6 +4,8 @@ import com.pos_terminal_simulator.client.SwitchClient;
 import com.pos_terminal_simulator.dto.PaymentRequest;
 import com.pos_terminal_simulator.dto.PaymentResponse;
 
+import java.io.IOException;
+
 
 public class PaymentService {
 
@@ -15,12 +17,19 @@ public class PaymentService {
         this.switchClient = switchClient;
     }
 
-    public PaymentResponse purchase(
+    public String purchase(
             PaymentRequest request
     ) {
-
-        return switchClient.sendPurchase(
-                request
-        );
+        try {
+            switchClient.connect();
+            String response = switchClient.sendPurchase(
+                    request
+            );
+            switchClient.disconnect();
+            return response;
+        } catch (IOException ioException) {
+            System.out.println(ioException.getMessage());
+            throw new RuntimeException("failed to send message");
+        }
     }
 }

@@ -104,7 +104,8 @@ public class PosSimulatorApplication extends Application {
                         appConfig
                                 .getApiConfig()
                                 .getSwitchPort(),
-                        iso8583Mapper
+                        iso8583Mapper,
+                        appConfig.getIso8583TcpClient()
                 );
 
         settingsService =
@@ -113,7 +114,7 @@ public class PosSimulatorApplication extends Application {
 
         paymentService =
                 new PaymentService(
-                        switchClient
+                        appConfig.getSwitchClient()
                 );
 
 
